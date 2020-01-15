@@ -1,0 +1,19 @@
+{
+  "name": "boorran-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "serverless offline -P 8080 -o 0.0.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fetchier": "0.0.28",
+    "hasu": "0.0.29",
+    "serverless": "^1.61.1",
+    "serverless-offline": "^5.12.1"
+  }
+}

@@ -1,0 +1,16 @@
+service: boorran-node
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+
+functions:
+  start:
+    handler: functions/index.handler
+    events:
+      - http:
+          path: start
+          method: get
+
+plugins:
+  - serverless-offline
