@@ -11,6 +11,12 @@ functions:
       - http:
           path: start
           method: get
+  auth:
+      handler: functions/Shared/Auth/index.handler
+      events:
+        - http:
+            path: auth
+            method: post
 
 plugins:
   - serverless-offline
