@@ -27,7 +27,7 @@ module.exports.handler = async event => {
       const expiredAt = new Date(new Date().getTime() + 6 * 60 * 60 * 1000).toISOString();
       const { insert_Sessions } = await gqRequest(qCreateSession(Users[0].id, expiredAt));
 
-      return success({ session: insert_Sessions.returning });
+      return success({ session: insert_Sessions.returning[0] });
     }
     else return success({ session: lastSession });
   } catch (err) {
