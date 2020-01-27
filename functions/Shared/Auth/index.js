@@ -22,10 +22,14 @@ module.exports.handler = async event => {
 
     if(!Users.length) return fail('Email or password is incorrect');
 
-    const expiredAt = new Date(new Date().getTime() + 6 * 60 * 60 * 1000).toISOString();
-    const { insert_Sessions } = await gqRequest(qCreateSession(Users[0].id, expiredAt));
+    const lastSession = Users[0].userSessions.length && Users[0].userSessions[0];
+    if(new Date() > new Date(lastSession.expiredAt)) {
+      const expiredAt = new Date(new Date().getTime() + 6 * 60 * 60 * 1000).toISOString();
+      const { insert_Sessions } = await gqRequest(qCreateSession(Users[0].id, expiredAt));
 
-    return success({ session: insert_Sessions.returning });
+      return success({ session: insert_Sessions.returning });
+    }
+    else return success({ session: lastSession });
   } catch (err) {
     return fail(err);
   };

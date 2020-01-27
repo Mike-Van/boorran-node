@@ -18,7 +18,12 @@ const qCheckUser = (email, pin) => `{
       { email: { _eq: "${email}"} }
       { pin: { _eq: "${pin}"} }
     ]
-  }) { ${userField} }
+  }) {
+    ${userField}
+    userSessions(limit: 1, order_by: {createdAt: desc}) {
+      ${sessionField}
+    }
+  }
 }`;
 
 const qCreateSession = (id, expired) => `mutation {
