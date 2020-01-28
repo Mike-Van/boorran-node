@@ -17,6 +17,12 @@ functions:
         - http:
             path: auth
             method: post
+  boorranOrders:
+    handler: functions/Boorran/SyncOrders/index.handler
+    events:
+      - http:
+          path: /boorran/orders
+          method: get
 
 plugins:
   - serverless-offline
