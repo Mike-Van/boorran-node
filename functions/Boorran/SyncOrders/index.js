@@ -21,25 +21,26 @@ module.exports.handler = async event => {
 
     //sync to hasura
     res.body.orders.forEach(async order => {
-      const { 
-        id, 
-        order_number, 
-        line_items, 
-        subtotal_price, 
-        total_discount, 
-        note, 
-        gateWay, 
-        financial_status, 
+
+      const {
+        id,
+        order_number,
+        line_items,
+        subtotal_price,
+        total_discount,
+        note,
+        gateWay,
+        financial_status,
         customer,
         created_at,
         total_price
       } = order;
 
-      const obj = { 
+      const obj = {
         source: 'shopify',
-        id,
+        id: id.toString(),
         createdAt: created_at,
-        orderNumber: order_number,
+        orderNumber: order_number.toString(),
         items: line_items,
         subTotal: subtotal_price,
         note: note,
@@ -49,13 +50,15 @@ module.exports.handler = async event => {
         grandTotal: total_price
       };
 
-      const reqUpsert = await GQL({ 
-        url: HASURA_URL, 
-        headers: { 'x-hasura-admin-secret': HASURA_ACCESS_KEY }, 
+      // console.log(JSON.stringify({ variables: { obj } }));
+
+      const reqUpsert = await GQL({
+        url: HASURA_URL,
+        headers: { 'x-hasura-admin-secret': HASURA_ACCESS_KEY },
         query: qUpsertOrder,
         variables: { obj }
       });
-      console.log(reqUpsert);
+      console.log(reqUpsert)
     });
 
     return success(res);
