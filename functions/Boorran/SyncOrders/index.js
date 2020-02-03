@@ -11,7 +11,7 @@ module.exports.handler = async event => {
               && Object.keys(params)
                 .filter(key => params[key] || params[key].length)
                 .map(key => `${key}=${params[key]}`)
-                .join('&') || 'limit=20';
+                .join('&') || 'limit=20&status=any&financial_status=any&fulfillment_status=any';
 
     const url = `https://${BOORRAN_API_KEY}:${BOORRAN_API_PW}@${BOORRAN_STORE}/admin/api/2020-01/orders.json?${qs}`;
 
