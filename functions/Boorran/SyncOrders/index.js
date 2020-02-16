@@ -14,7 +14,7 @@ module.exports.handler = async event => {
                 .join('&') || 'limit=50&status=any&financial_status=any&fulfillment_status=any';
 
     const url = `https://${BOORRAN_API_KEY}:${BOORRAN_API_PW}@${BOORRAN_STORE}/admin/api/2020-01/orders.json?${qs}`;
-    // console.log(url)
+    console.log(url)
     const req = await fetch(url, { method: 'GET' });
 
     const res = { body: await req.json(), headers: req.headers.raw() };
@@ -28,15 +28,15 @@ module.exports.handler = async event => {
         note,
         gateway,
         financial_status,
-        customer,
+        customer = {},
         created_at,
         total_price,
-        shipping_address,
-        billing_address
+        shipping_address = {},
+        billing_address = {}
       } = order;
 
-      const address = shipping_address.address1 || billing_address.address1 || customer.default_address.address1;
-
+      const address = shipping_address.address1 || billing_address.address1 || customer.default_address && customer.default_address.address1;
+      
       return {
         id,
         createdAt: created_at,
