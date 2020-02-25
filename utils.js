@@ -47,8 +47,8 @@ const qGetUserByToken = token => `{
 
 const qUpsertOrder = `mutation($obj: [boorran_Orders_insert_input!]!) {
   insert_boorran_Orders(objects: $obj on_conflict: {
-    constraint: Orders_pkey
-    update_columns: []
+    constraint: Orders_shopifyOrderId_key
+    update_columns: [ shopifyOrderId ]
   }) {
     returning {
       id

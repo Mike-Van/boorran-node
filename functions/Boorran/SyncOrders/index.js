@@ -14,7 +14,7 @@ module.exports.handler = async event => {
                 .join('&') || 'limit=50&status=any&financial_status=any&fulfillment_status=any';
 
     const url = `https://${BOORRAN_API_KEY}:${BOORRAN_API_PW}@${BOORRAN_STORE}/admin/api/2020-01/orders.json?${qs}`;
-    console.log(url)
+    // console.log(url)
     const req = await fetch(url, { method: 'GET' });
 
     const res = { body: await req.json(), headers: req.headers.raw() };
@@ -36,24 +36,40 @@ module.exports.handler = async event => {
       } = order;
 
       const address = shipping_address.address1 || billing_address.address1 || customer.default_address && customer.default_address.address1;
-      
+
       return {
-        id,
+        shopifyOrderId: id,
         createdAt: created_at,
-        orderNumber: order_number,
-        items: line_items,
+        shopifyOrderNumber: order_number,
         subTotal: total_price,
         note: note,
         paymentMethod: gateway,
         status: financial_status,
-        grandTotal: parseFloat(total_price),
-        discount: parseFloat(total_discounts),
+        grandTotal: total_price,
+        discount: total_discounts,
         customerDetail: customer,
         orderAddress: address,
-        deliveryDestination: address
+        deliveryDestination: address,
+        orderItems: {
+          data: line_items.map(item => {
+            return {
+              itemId: item.product_id,
+              itemTitle: item.title,
+              variantId: item.variant_id,
+              variantTitle: item.variant_title,
+              quantity: item.quantity,
+              discount: item.total_discount,
+              unitPrice: item.price
+            }
+          }),
+          on_conflict: {
+            constraint: "OrderItems_pkey",
+            update_columns: []
+          }
+        }
       };
     });
-    // console.log('variables', JSON.stringify(obj));
+    // return console.log('variables', JSON.stringify(obj));
 
     const reqUpsert = await GQL({
       url: HASURA_URL,
