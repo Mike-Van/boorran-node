@@ -24,15 +24,19 @@ module.exports.handler = async event => {
         id,
         order_number,
         line_items,
-        total_discounts,
         note,
         gateway,
         financial_status,
         customer = {},
         created_at,
-        total_price,
         shipping_address = {},
-        billing_address = {}
+        billing_address = {},
+        total_line_items_price,
+        total_discounts,
+        total_tax,
+        subtotal_price,
+        total_shipping_price_set: { shop_money: { amount } },
+        total_price,
       } = order;
 
       const address = shipping_address.address1 || billing_address.address1 || customer.default_address && customer.default_address.address1;
@@ -41,15 +45,18 @@ module.exports.handler = async event => {
         shopifyOrderId: id,
         createdAt: created_at,
         shopifyOrderNumber: order_number,
-        subTotal: total_price,
         note: note,
         paymentMethod: gateway,
         status: financial_status,
-        grandTotal: total_price,
-        discount: total_discounts,
         customerDetail: customer,
         orderAddress: address,
         deliveryDestination: address,
+        itemsPrice: total_line_items_price,
+        discount: total_discounts,
+        taxPrice: total_tax,
+        subTotal: subtotal_price,
+        deliveryPrice: amount,
+        grandTotal: total_price,
         orderItems: {
           data: line_items.map(item => {
             return {
