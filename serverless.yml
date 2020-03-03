@@ -23,6 +23,12 @@ functions:
       - http:
           path: /boorran/orders
           method: get
+  boorranOrderWebhook:
+    handler: functions/Boorran/OrderWebhook/index.handler
+    events:
+      - http:
+          path: /boorran/order_webhook
+          method: post
 
 plugins:
   - serverless-offline
