@@ -81,9 +81,9 @@ const parseOrderObj = order => {
   const address = shipping_address.address1 || billing_address.address1 || customer.default_address && customer.default_address.address1;
 
   return {
-    shopifyOrderId: id,
+    shopifyOrderId: id.toString(),
     createdAt: created_at,
-    shopifyOrderNumber: order_number,
+    shopifyOrderNumber: order_number.toString(),
     note: note,
     paymentMethod: gateway,
     status: financial_status,
