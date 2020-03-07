@@ -66,7 +66,7 @@ const parseOrderObj = order => {
     note,
     gateway,
     financial_status,
-    customer = {},
+    customer,
     created_at,
     shipping_address = {},
     billing_address = {},
@@ -87,7 +87,6 @@ const parseOrderObj = order => {
     note: note,
     paymentMethod: gateway,
     status: financial_status,
-    customerDetail: customer,
     orderAddress: address,
     deliveryDestination: address,
     itemsPrice: total_line_items_price,
@@ -96,6 +95,19 @@ const parseOrderObj = order => {
     subTotal: subtotal_price,
     deliveryPrice: amount,
     grandTotal: total_price,
+    customer: {
+      data: {
+        email: customer.email,
+        phone: customer.phone,
+        firstName: customer.first_name,
+        lastName: customer.last_name,
+        shopifyCustomerId: customer.id.toString()
+      },
+      on_conflict: {
+        constraint: "Customers_shopifyCustomerId_key",
+        update_columns: ['email', 'firstName', 'lastName', 'phone']
+      }
+    },
     orderItems: {
       data: line_items.map(item => {
         return {

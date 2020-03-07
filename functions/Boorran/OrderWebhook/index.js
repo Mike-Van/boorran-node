@@ -6,7 +6,7 @@ module.exports.handler = async event => {
     const body = event.body && JSON.parse(event.body) || {};
 
     const obj = parseOrderObj(body);
-    await gqRequest(qUpsertOrder, { obj });
+    const res = await gqRequest(qUpsertOrder, { obj });
 
     return success(res);
   } catch (err) {
