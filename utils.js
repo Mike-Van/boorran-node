@@ -95,6 +95,7 @@ const parseOrderObj = order => {
     subTotal: subtotal_price,
     deliveryPrice: amount,
     grandTotal: total_price,
+    boorranGrandTotal: total_price,
     customer: {
       data: {
         email: customer.email,
