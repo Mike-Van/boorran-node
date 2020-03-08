@@ -22,6 +22,8 @@ module.exports.handler = async event => {
 
     if(!Users.length) return fail('Email or password is incorrect');
 
+    if(!Users[0].activationStatus) return fail('Your account has been deactivated. Please contact admin.');
+
     const lastSession = Users[0].userSessions.length && Users[0].userSessions[0];
     if(!lastSession || new Date() > new Date(lastSession.expiredAt)) {
       const expiredAt = new Date(new Date().getTime() + 6 * 60 * 60 * 1000).toISOString();

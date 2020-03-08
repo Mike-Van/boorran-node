@@ -10,7 +10,7 @@ const gqRequest = async (query, variables) => {
   });
 };
 
-const userField = `id name email photo store role metadata`;
+const userField = `id name email photo store role metadata activationStatus`;
 const sessionField = `id createdAt expiredAt user { ${userField} }`;
 
 const qCheckUser = (email, pin) => `{
