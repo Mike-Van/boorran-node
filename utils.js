@@ -66,7 +66,7 @@ const parseOrderObj = order => {
     note,
     payment_gateway_names = [],
     financial_status,
-    customer,
+    customer = {},
     created_at,
     shipping_address = {},
     billing_address = {},
@@ -78,7 +78,7 @@ const parseOrderObj = order => {
     total_price,
   } = order;
 
-  const address = shipping_address.address1 || billing_address.address1 || customer.default_address && customer.default_address.address1;
+  const address = shipping_address.address1 || billing_address.address1 || customer.default_address && customer.default_address.address1 || '';
 
   return {
     shopifyOrderId: id.toString(),
@@ -102,7 +102,7 @@ const parseOrderObj = order => {
         phone: customer.phone,
         firstName: customer.first_name,
         lastName: customer.last_name,
-        shopifyCustomerId: customer.id.toString()
+        shopifyCustomerId: customer.id && customer.id.toString()
       },
       on_conflict: {
         constraint: "Customers_shopifyCustomerId_key",
