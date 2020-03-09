@@ -86,7 +86,7 @@ const parseOrderObj = order => {
     shopifyOrderNumber: order_number.toString(),
     note: note,
     paymentMethod: payment_gateway_names[0] || '',
-    shopifyStatus: financial_status,
+    status: financial_status,
     orderAddress: address,
     deliveryDestination: address,
     itemsPrice: total_line_items_price,
