@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "serverless offline -P 8080 -o 0.0.0.0",
-    "start:production": "HASURA_URL=http://178.128.94.27/v1/graphql serverless offline -P 8080 -o 0.0.0.0"
+    "start:production": "HASURA_URL=https://hasura.boorran.com/v1/graphql serverless offline -P 8080 -o 0.0.0.0"
   },
   "keywords": [],
   "author": "",
