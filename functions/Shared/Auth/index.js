@@ -4,7 +4,7 @@ const { gqRequest, qCheckUser, qCreateSession, qGetUserByToken } = require('../.
 module.exports.handler = async event => {
   const { email, pin } = JSON.parse(event.body) || {};
   const { sessionToken } = event.headers || {};
-
+  console.log('auth request', email, pin, sessionToken, typeof email, typeof pin, typeof sessionToken)
   try {
     // session should work within 6 hours
     if(sessionToken) {

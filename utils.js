@@ -2,6 +2,7 @@ const { GQL } = require('fetchier');
 const { HASURA_URL, HASURA_ACCESS_KEY } = require('./config');
 
 const gqRequest = async (query, variables) => {
+  console.log('gqRequest', HASURA_ACCESS_KEY, HASURA_URL)
   return await GQL({
     url: HASURA_URL,
     headers: { 'x-hasura-admin-secret': HASURA_ACCESS_KEY },
