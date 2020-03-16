@@ -6,7 +6,7 @@ module.exports.handler = async event => {
   const headers  = event.headers || {};
   const token = headers.Sessiontoken || headers.sessionToken;
 
-  console.log('auth-request', email, pin, token, typeof email, typeof pin, typeof token, headers)
+  // console.log('auth-request', email, pin, token, typeof email, typeof pin, typeof token, headers)
   try {
     // session should work within 6 hours
     if(token) {
