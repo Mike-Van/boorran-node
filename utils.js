@@ -50,7 +50,7 @@ const qGetUserByToken = token => `{
 const qUpsertOrder = `mutation($obj: [boorran_Orders_insert_input!]!) {
   insert_boorran_Orders(objects: $obj on_conflict: {
     constraint: Orders_shopifyOrderId_key
-    update_columns: [ shopifyOrderId refundDeliveryToStaff ]
+    update_columns: [ shopifyOrderId ]
   }) {
     returning {
       id
@@ -80,7 +80,7 @@ const parseOrderObj = order => {
   } = order;
 
   const refundDeliveryToStaff = ['ABA', 'ToanChet', 'Wing Money Transfer', 'Pi Pay']
-                                  .includes(payment_gateway_names[0].trim()) ? 'not_yet' : 'done';
+                                  .includes(payment_gateway_names[0].trim()) ? 'not_yet' : null;
 
   const address = shipping_address.address1 || billing_address.address1 || customer.default_address && customer.default_address.address1 || '';
 
