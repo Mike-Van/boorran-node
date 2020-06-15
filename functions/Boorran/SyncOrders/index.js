@@ -19,7 +19,9 @@ module.exports.handler = async event => {
 
     const res = { body: await req.json(), headers: req.headers.raw() };
 
-    const obj = res.body.orders.map(order => parseOrderObj(order));
+    const obj = res.body.orders
+                  .filter(order => order.id || order.order_number)
+                  .map(order => parseOrderObj(order));
 
     await gqRequest(qUpsertOrder, { obj });
 
