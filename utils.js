@@ -80,7 +80,7 @@ const parseOrderObj = order => {
   } = order;
 
   const refundDeliveryToStaff = ['ABA', 'ToanChet', 'Wing Money Transfer', 'Pi Pay']
-                                  .includes(payment_gateway_names[0].trim()) ? 'not_yet' : null;
+                                  .includes((payment_gateway_names[0] || '').trim()) ? 'not_yet' : null;
 
   const address = shipping_address.address1 || billing_address.address1 || customer.default_address && customer.default_address.address1 || '';
 
@@ -89,7 +89,7 @@ const parseOrderObj = order => {
     createdAt: created_at,
     shopifyOrderNumber: order_number.toString(),
     note: note,
-    paymentMethod: payment_gateway_names[0].trim() || '',
+    paymentMethod: (payment_gateway_names[0] || '').trim() || '',
     status: financial_status,
     orderAddress: address,
     deliveryDestination: address,
